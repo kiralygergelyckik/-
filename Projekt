@@ -1,0 +1,24 @@
+def mitcsinal(melyik2, melyik):
+    melyik2, ertek = 0, 2
+    melyik2 = valasztas(melyik2, ertek)
+    print(melyik2)
+    if melyik2 == 1:
+        statvalasztas(melyik)
+    elif melyik2 == 2:
+        adathozzaad(melyik)
+    else:
+        valasztas(0, ertek)
+    return melyik2
+
+
+        
+def kezdetek(melyik):
+    melyik, ertek = 0, 1
+    melyik = valasztas(melyik, ertek)
+    return melyik
+
+def main():
+    melyik, melyik2 = 0, 0
+    melyik = kezdetek(melyik)
+    melyik2 = mitcsinal(melyik2, melyik)
+main()
