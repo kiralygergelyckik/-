@@ -1,3 +1,31 @@
+def statvalasztas(melyik):
+    statvalasz, ertek = 0, 3 
+    statvalasz = valasztas(statvalasz, ertek)
+    if statvalasz == 1:
+        megszamlalas(melyik)
+    elif statvalasz == 2:
+        atlag(melyik)
+    elif statvalasz == 3:
+        miniesmaxi(melyik)
+    # elif statvalasz == 4:
+    #     kereses(melyik)
+        
+def adathozzaad(melyik):
+    szo, iras = 0, 0
+    if melyik == 1:
+        fa = open("adatok.txt", "a", encoding="UTF-8")
+    else:
+        fa = open("adatok2.txt", "a", encoding="UTF-8")
+    nev = input("Mi a neve: ")
+    szo = input("Mennyi pontot szerzett az illető szóbelin: ")
+    iras = input("Mennyi pontot szerzett az illető írásbelin: ")
+    fa.write(f"{szo};{iras};{nev}\n")
+    fa.close()
+    print( )
+    print("Sikeresen hozzáadtva a fájlhoz")
+    print()
+    mitcsinal(0, melyik)
+
 def mitcsinal(melyik2, melyik):
     melyik2, ertek = 0, 2
     melyik2 = valasztas(melyik2, ertek)
