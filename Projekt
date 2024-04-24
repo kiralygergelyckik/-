@@ -1,3 +1,62 @@
+def vissza(ertek):
+    if ertek == 1:
+        main()
+    elif ertek == 2:
+        main()
+    elif ertek == 3:
+        main()
+        
+def kiiras(ertek):
+    if ertek == 1:
+        print("Melyik fájlt szeretnéd megnyitni:")
+        print("1 - adatok.txt")
+        print("2 - adatok2.txt")
+        print("k - kilépés")
+        
+    elif ertek == 2:
+        print("Mit szeretnél csinálni?")
+        print("1 - statisztikát nézni")
+        print("2 - hozzáadni adatot")
+        print("v - vissza")
+        print("k - kilépés")
+        
+    elif ertek == 3:
+        print("Milyen fajta statisztikát szeretnél látni?")
+        print("1 - Hány darab adat van.")
+        print("2 - Mennyi lett az átlag pont.")
+        print("3 - Melyik a legkisebb/ legnagyobb pontszám")
+        print("4 - pontszám alapú keresés")
+        print("v - vissza")
+        print("k - kilépés")
+
+def valasztas(valasz, ertek):
+    i = 0
+    valasz = 0
+    while i != 1:
+        kiiras(ertek)
+        iras = input()
+        print()
+        if iras == "1":
+            i += 1
+            valasz += 1
+        elif iras == "2":
+            i += 1
+            valasz += 2
+        elif iras == "3" and ertek >= 3:
+            i += 1
+            valasz += 3
+        elif iras == "4" and ertek >= 3:
+            i += 1
+            valasz += 4
+        elif iras == "v" and ertek >= 2:
+            vissza(ertek)
+        elif iras == "k":
+            exit()
+        else:
+            print("Nem értelmezhető kérés")
+        print()
+    return valasz
+
 def statvalasztas(melyik):
     statvalasz, ertek = 0, 3 
     statvalasz = valasztas(statvalasz, ertek)
