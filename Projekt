@@ -57,6 +57,80 @@ def valasztas(valasz, ertek):
         print()
     return valasz
 
+def beolvas(szobelik, irasbelik, nevek, melyik):
+    if melyik == 1:
+        fr = open("adatok.txt", "r", encoding="UTF-8")
+    else:
+        fr = open("adatok2.txt", "r", encoding="UTF-8")       
+    sor = fr.readline().strip()
+    while sor != "":
+        adatok = sor.split(";")
+        szobelik.append(int(adatok[0]))
+        irasbelik.append(int(adatok[1]))
+        nevek.append(adatok[2])
+        sor = fr.readline().strip()
+    fr.close()
+    return(szobelik, irasbelik, nevek, melyik)
+
+def miniesmaxi(melyik):
+    szobeli, irasbeli, nevek = [], [], []
+    szobeli, irasbeli, nevek, melyik = beolvas(szobeli, irasbeli, nevek, melyik)
+    n = len(irasbeli)
+    mini, maxi, irmini, irmaxi= szobeli[0], szobeli[0], irasbeli[0], irasbeli[0]
+    minirnev, minszonev, maxszonev, maxirnev = 0, 0, 0, 0
+    for i in range(n):
+        if szobeli[i] < mini:
+            mini = szobeli[i]
+            minszonev = i
+    for i in range(n):
+        if szobeli[i] > maxi:
+            maxi = szobeli[i]
+            maxszonev = i
+
+    for i in range(n):
+        if irasbeli[i] < irmini:
+            irmini = irasbeli[i]
+            minirnev = i
+    for i in range(n):
+        if irasbeli[i] > irmaxi:
+            irmaxi = irasbeli[i]
+            maxirnev = i
+            
+    print(f"A legkisebb szóbelin elért legkisebb pontszám {mini}, {nevek[minszonev]} írta. A legnagyobb {maxi}, {nevek[maxszonev]} írta")
+    print(f"A legkisebb írásbelin elért legkisebb pontszám {irmini}, {nevek[minirnev]} írta. A legnagyobb {irmaxi}, {nevek[maxirnev]} írta")
+    print()
+    statvalasztas(melyik)   
+        
+def atlag(melyik):
+    db = 0
+    db, szobeli, irasbeli, nevek = 0, [], [], []
+    szobeli, irasbeli, nevek, melyik = beolvas(szobeli, irasbeli, nevek, melyik)
+    n = len(irasbeli)
+    osszes = 0
+    irasosszes = 0
+    for i in range(n):
+        osszes += szobeli[i]
+        db += 1
+    for i in range(n):
+        irasosszes += irasbeli[i]
+        db += 1
+    atlag = osszes / db
+    iratlag = irasosszes / db
+    print(f"A szóbelik átlag: {round(atlag, 0)}, az írásbelik átlaga pedig: {round(iratlag, 0)}")
+    print()
+    statvalasztas(melyik)
+    
+def megszamlalas(melyik):   
+    db, i, szobeli, irasbeli, nevek = 0, 0, [], [], []
+    szobeli, irasbeli, nevek, melyik = beolvas(szobeli, irasbeli, nevek, melyik)
+    n = len(szobeli)
+    while i < n:
+        db += 1
+        i += 1
+    print(f"Összesen {db} darab adat van leírva.")
+    print()
+    statvalasztas(melyik)
+
 def statvalasztas(melyik):
     statvalasz, ertek = 0, 3 
     statvalasz = valasztas(statvalasz, ertek)
@@ -84,6 +158,8 @@ def adathozzaad(melyik):
     print("Sikeresen hozzáadtva a fájlhoz")
     print()
     mitcsinal(0, melyik)
+
+
 
 def mitcsinal(melyik2, melyik):
     melyik2, ertek = 0, 2
