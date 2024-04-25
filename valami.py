@@ -1,0 +1,187 @@
+def vissza(ertek):
+    if ertek == 1:
+        main()
+    elif ertek == 2:
+        main()
+    elif ertek == 3:
+        main()
+        
+def kiiras(ertek):
+    if ertek == 1:
+        print("Melyik fájlt szeretnéd megnyitni:")
+        print("1 - adatok.txt")
+        print("2 - adatok2.txt")
+        print("k - kilépés")
+        
+    elif ertek == 2:
+        print("Mit szeretnél csinálni?")
+        print("1 - statisztikát nézni")
+        print("2 - hozzáadni adatot")
+        print("v - vissza")
+        print("k - kilépés")
+        
+    elif ertek == 3:
+        print("Milyen fajta statisztikát szeretnél látni?")
+        print("1 - Hány darab adat van.")
+        print("2 - Mennyi lett az átlag pont.")
+        print("3 - Melyik a legkisebb/ legnagyobb pontszám")
+        print("4 - pontszám alapú keresés")
+        print("v - vissza")
+        print("k - kilépés")
+
+def valasztas(valasz, ertek):
+    i = 0
+    valasz = 0
+    while i != 1:
+        kiiras(ertek)
+        iras = input()
+        print()
+        if iras == "1":
+            i += 1
+            valasz += 1
+        elif iras == "2":
+            i += 1
+            valasz += 2
+        elif iras == "3" and ertek >= 3:
+            i += 1
+            valasz += 3
+        elif iras == "4" and ertek >= 3:
+            i += 1
+            valasz += 4
+        elif iras == "v" and ertek >= 2:
+            vissza(ertek)
+        elif iras == "k":
+            exit()
+        else:
+            print("Nem értelmezhető kérés")
+        print()
+    return valasz
+
+def beolvas(szobelik, irasbelik, nevek, melyik):
+    if melyik == 1:
+        fr = open("adatok.txt", "r", encoding="UTF-8")
+    else:
+        fr = open("adatok2.txt", "r", encoding="UTF-8")       
+    sor = fr.readline().strip()
+    while sor != "":
+        adatok = sor.split(";")
+        szobelik.append(int(adatok[0]))
+        irasbelik.append(int(adatok[1]))
+        nevek.append(adatok[2])
+        sor = fr.readline().strip()
+    fr.close()
+    return(szobelik, irasbelik, nevek, melyik)
+
+def miniesmaxi(melyik):
+    szobeli, irasbeli, nevek = [], [], []
+    szobeli, irasbeli, nevek, melyik = beolvas(szobeli, irasbeli, nevek, melyik)
+    n = len(irasbeli)
+    mini, maxi, irmini, irmaxi= szobeli[0], szobeli[0], irasbeli[0], irasbeli[0]
+    minirnev, minszonev, maxszonev, maxirnev = 0, 0, 0, 0
+    for i in range(n):
+        if szobeli[i] < mini:
+            mini = szobeli[i]
+            minszonev = i
+    for i in range(n):
+        if szobeli[i] > maxi:
+            maxi = szobeli[i]
+            maxszonev = i
+
+    for i in range(n):
+        if irasbeli[i] < irmini:
+            irmini = irasbeli[i]
+            minirnev = i
+    for i in range(n):
+        if irasbeli[i] > irmaxi:
+            irmaxi = irasbeli[i]
+            maxirnev = i
+            
+    print(f"A legkisebb szóbelin elért legkisebb pontszám {mini}, {nevek[minszonev]} írta. A legnagyobb {maxi}, {nevek[maxszonev]} írta")
+    print(f"A legkisebb írásbelin elért legkisebb pontszám {irmini}, {nevek[minirnev]} írta. A legnagyobb {irmaxi}, {nevek[maxirnev]} írta")
+    print()
+    statvalasztas(melyik)   
+        
+def atlag(melyik):
+    db = 0
+    db, szobeli, irasbeli, nevek = 0, [], [], []
+    szobeli, irasbeli, nevek, melyik = beolvas(szobeli, irasbeli, nevek, melyik)
+    n = len(irasbeli)
+    osszes = 0
+    irasosszes = 0
+    for i in range(n):
+        osszes += szobeli[i]
+        db += 1
+    for i in range(n):
+        irasosszes += irasbeli[i]
+        db += 1
+    atlag = osszes / db
+    iratlag = irasosszes / db
+    print(f"A szóbelik átlag: {round(atlag, 0)}, az írásbelik átlaga pedig: {round(iratlag, 0)}")
+    print()
+    statvalasztas(melyik)
+    
+def megszamlalas(melyik):   
+    db, i, szobeli, irasbeli, nevek = 0, 0, [], [], []
+    szobeli, irasbeli, nevek, melyik = beolvas(szobeli, irasbeli, nevek, melyik)
+    n = len(szobeli)
+    while i < n:
+        db += 1
+        i += 1
+    print(f"Összesen {db} darab adat van leírva.")
+    print()
+    statvalasztas(melyik)
+
+def statvalasztas(melyik):
+    statvalasz, ertek = 0, 3 
+    statvalasz = valasztas(statvalasz, ertek)
+    if statvalasz == 1:
+        megszamlalas(melyik)
+    elif statvalasz == 2:
+        atlag(melyik)
+    elif statvalasz == 3:
+        miniesmaxi(melyik)
+    # elif statvalasz == 4:
+    #     kereses(melyik)
+        
+def adathozzaad(melyik):
+    szo, iras = 0, 0
+    if melyik == 1:
+        fa = open("adatok.txt", "a", encoding="UTF-8")
+    else:
+        fa = open("adatok2.txt", "a", encoding="UTF-8")
+    nev = input("Mi a neve: ")
+    szo = input("Mennyi pontot szerzett az illető szóbelin: ")
+    iras = input("Mennyi pontot szerzett az illető írásbelin: ")
+    fa.write(f"{szo};{iras};{nev}\n")
+    fa.close()
+    print( )
+    print("Sikeresen hozzáadtva a fájlhoz")
+    print()
+    mitcsinal(0, melyik)
+
+
+
+def mitcsinal(melyik2, melyik):
+    melyik2, ertek = 0, 2
+    melyik2 = valasztas(melyik2, ertek)
+    print(melyik2)
+    if melyik2 == 1:
+        statvalasztas(melyik)
+    elif melyik2 == 2:
+        adathozzaad(melyik)
+    else:
+        valasztas(0, ertek)
+    return melyik2
+
+
+        
+def kezdetek(melyik):
+    melyik, ertek = 0, 1
+    melyik = valasztas(melyik, ertek)
+    return melyik
+
+def main():
+    melyik, melyik2 = 0, 0
+    melyik = kezdetek(melyik)
+    melyik2 = mitcsinal(melyik2, melyik)
+main()
